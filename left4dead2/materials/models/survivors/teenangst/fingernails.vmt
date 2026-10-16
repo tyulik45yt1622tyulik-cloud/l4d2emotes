@@ -1,0 +1,9 @@
+patch
+{
+include "materials/models/survivors/survivors_it_shared.vmt"
+insert
+{
+                "$basetexture" "models\survivors\teenangst\Ashley_nails"
+	"$nodecal" 1
+}
+}

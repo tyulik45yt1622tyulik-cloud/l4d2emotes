@@ -1,0 +1,138 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models\v_models\weapons\eq_medkit\1 (14)"
+ $one        1
+    $zero       0
+    $mo     "-1"
+    $fh     500
+ 
+    $timestop       1000
+    $randstop       0
+    $storeframe 1000
+    $weareinstoretime   0
+    $wecanstore 0
+    $dostore        0
+    $rngtime        0  
+    $rngtimeinvert  0  
+    $rngtimecorr    0  
+    $realrngtime    0  
+    $pos        "[0 0 0]"
+    $poscheck   "[0 0 0]"  
+ 
+//////////////////////////////////////////////////////////////////////////////////////////
+// MMA RNG ($basetexture)
+//////////////////////////////////////////////////////////////////////////////////////////
+ 
+Proxies
+{
+ 
+        MaterialModifyAnimated
+        {          
+            animatedtexturevar          "$basetexture"
+            animatedtextureframenumvar      "$frame"
+            animatedtextureframerate        "30"
+         }
+ 
+    UniformNoise
+        {              
+                    minVal      "0"
+                maxVal      "1"
+                resultVar       "$randstop"
+        }
+ 
+    LessOrEqual
+        {      
+                LessEqualVar    "$timestop"
+                greaterVar  "$randstop"
+                srcVar1         "$timestop"
+                srcVar2         "$fh"          
+                resultVar       "$timestop"
+        }
+ 
+        PlayerPosition             
+        {
+                    scale           "1"
+                resultVar       "$pos"
+        }
+       
+    Abs                        
+        {      
+                srcVar1     "$pos"     
+                    resultVar       "$poscheck"
+        }
+ 
+    LinearRamp                         
+    {          
+        rate        "1"
+        resultVar       "$rngtime"
+    }
+ 
+    Multiply                                               
+    {
+        srcVar1     "$mo"
+        srcVar2         "$rngtime"
+        resultVar       "$rngtimeinvert"
+    }
+ 
+    LessOrEqual                                    
+        {
+                LessEqualVar    "$rngtimeinvert"
+                greaterVar  "$rngtimecorr"
+                srcVar1         "$poscheck"
+                srcVar2         "$zero"          
+                resultVar       "$rngtimecorr"    
+        }
+ 
+    Add                                
+        {
+        srcVar1     "$rngtime"
+        srcVar2         "$rngtimecorr"
+        resultVar       "$realrngtime"
+         }
+ 
+    LessOrEqual    
+        {                                          
+                LessEqualVar    "$zero"                    
+                greaterVar  "$one"
+                srcVar1         "$realrngtime"
+                srcVar2         "$timestop"          
+                resultVar       "$weareinstoretime"
+        }
+ 
+    LessOrEqual
+        {          
+                LessEqualVar    "$zero"                    
+                greaterVar  "$one"
+                srcVar1         "$storeframe"
+                srcVar2         "$fh"          
+                resultVar       "$wecanstore"
+        }
+ 
+    Multiply               
+        {      
+        srcVar1     "$wecanstore"
+        srcVar2         "$weareinstoretime"
+        resultVar       "$dostore"
+         }
+ 
+    LessOrEqual
+        {          
+                LessEqualVar    "$storeframe"
+                greaterVar  "$frame"
+                srcVar1         "$dostore"
+                srcVar2         "$zero"          
+                resultVar       "$storeframe"
+        }
+ 
+    LessOrEqual    
+        {
+                LessEqualVar    "$frame"
+                greaterVar  "$storeframe"
+                srcVar1         "$weareinstoretime"
+                srcVar2         "$zero"          
+                resultVar       "$frame"
+        }
+ 
+// [###]
+ 
+}

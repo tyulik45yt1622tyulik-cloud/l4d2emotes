@@ -1,0 +1,28 @@
+patch
+{
+	include "materials/models/survivors/survivors_it_shared.vmt"
+	insert
+	{
+$baseTexture "models/survivors/clothes/fo_femaleskin"
+$bumpmap "models/survivors/clothes/fo_femaleskin_n"
+$halflambert 		1
+
+$phong 1
+$phongboost "1"
+$phongexponent 10
+$rimlight 1
+$rimlightexponent 4
+$rimlightboost .3
+$phongtint "[.85 .85 1]"
+$phongfresnelranges "[.5 .85 30]"
+$ambientocclusion 1
+//$lightwarptexture "models\survivors\gambler\gambler_head_wrp"
+
+
+//$color2 "[1.23 1.1 1]"
+$color2 "[1.1 1.05 1]"
+
+$nodecal 1
+$nocull 1
+}
+}
